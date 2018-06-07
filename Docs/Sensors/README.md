@@ -1,10 +1,24 @@
+PositioningSystem: {
+    Receiver: {
+        location: vec2
+    },
+}
+
 Radar: {
 	Transmitter: {
 		maxPower: int,
 		rechargeRate: float,
-		burstPattern: [8],
+		wavePattern: [
+            power: float,
+        ],
 	},
 	Receiver: {
-		Processor: {},
+        filters: [
+            id: int,
+        ],
+        echoes: [
+            objectId: int,
+            timeOfFlight: float,
+        ],
 	},
 }
