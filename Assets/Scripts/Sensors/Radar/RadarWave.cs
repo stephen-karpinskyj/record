@@ -17,7 +17,7 @@ public class RadarWave : MonoBehaviour
         yield return new WaitForSeconds(ttl);
         Destroy(gameObject);
     }
-
+    
     void FixedUpdate()
     {
         transform.localScale += Vector3.one * Time.fixedDeltaTime * speed;
@@ -26,6 +26,8 @@ public class RadarWave : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         var contactPoint = collision.contacts[0].point;
-        Instantiate(echoPrefab, contactPoint, Quaternion.identity);
+        var echo = Instantiate(echoPrefab, contactPoint, Quaternion.identity);
+        var entity = collision.gameObject.GetComponent<Entity>();
+        echo.Initialise(entity.Snapshot(), contactPoint);
     }
 }
