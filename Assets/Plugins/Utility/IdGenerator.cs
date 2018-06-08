@@ -1,6 +1,6 @@
 ﻿public struct IdGenerator
 {
-    private int currentId;
+    int currentId;
 
     public int Next()
     {
