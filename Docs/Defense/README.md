@@ -1,0 +1,5 @@
+```
+Shield: {
+    Enabled: bool,
+}
+```

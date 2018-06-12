@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  fadeOutDuration: 0.2
 --- !u!212 &212787705407680352
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -124,7 +125,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 1063d252d4895472a9dce4532210468e, type: 3}
   m_Color: {r: 0.709761, g: 0.2117647, b: 1, a: 0.2509804}
   m_FlipX: 0

@@ -15,7 +15,7 @@ public class PositioningSystemReceiver : MonoBehaviour
         {
             yield return new WaitForSeconds(frequency);
             var signal = Instantiate(signalPrefab, transform.position, transform.rotation);
-            signal.Initialise(GetComponent<Entity>().Snapshot());
+            signal.Initialise(GetComponentInParent<Entity>().Snapshot());
             ConsumeSignal(signal.Snapshot());
         }
     }

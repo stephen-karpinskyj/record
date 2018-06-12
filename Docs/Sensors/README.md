@@ -1,9 +1,9 @@
 ```
 PositioningSystem: {
     Receiver: {
-        frequency: float,
-        signals: [
-            myPosition: vec2,
+        Frequency: float,
+        Signals: [
+            MyPosition: vec2,
         ],
     },
 }
@@ -12,19 +12,18 @@ PositioningSystem: {
 ```
 Radar: {
 	Transmitter: {
-		maxPower: int,
-		rechargeRate: float,
-		wavePattern: [
+		RechargeRate: float,
+		WavePattern: [
             power: float,
         ],
 	},
 	Receiver: {
-        filters: [],
-        echoes: [
-            entityId: int,
-            distance: float,
-            direction: float,
-            (distance, direction, myPosition) = entityPosition: vec2,
+        Filters: [],
+        Echoes: [
+            EntityId: int,
+            Distance: float,
+            Heading: float,
+            (Distance, Heading, MyPosition) = EntityPosition: vec2,
         ],
 	},
 }

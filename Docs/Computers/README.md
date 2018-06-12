@@ -1,0 +1,11 @@
+```
+Processor: {
+    Logic: {},
+}
+```
+
+```
+Memory: {
+    Data: {},
+},
+```
