@@ -31,4 +31,22 @@ public static class MathUtility
     {
         return Mathf.Clamp01((value - min) / (max - min));
     }
+    
+    public static Vector3[] GenerateCircle(int pointCount, float radius, float z = 0f)
+    {
+        Debug.Assert(pointCount > 0);
+        Debug.Assert(radius > 0f);
+
+        var angleDelta = (360f / pointCount) * Mathf.Deg2Rad;
+        var points = new Vector3[pointCount];
+
+        var angle = 0f;
+        for (var i = 0; i < pointCount; i++)
+        {
+            points[i] = new Vector3(radius * Mathf.Sin(angle), radius * Mathf.Cos(angle), z);
+            angle += angleDelta;
+        }
+
+        return points;
+    }
 }

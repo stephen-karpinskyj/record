@@ -7,14 +7,22 @@ public class Engine : MonoBehaviour
     
     [SerializeField]
     float maxPower = 100;
+
+    [SerializeField]
+    float lerpSpeed = 1f;
     
     float throttle;
+    float targetThrottle;
+
+    void FixedUpdate()
+    {
+        throttle = Mathf.Lerp(throttle, targetThrottle, Time.fixedDeltaTime * lerpSpeed);
+    }
 
     public void SetThrottle(float newThrottle)
     {
-        // TODO: Lerp value
-        throttle = Mathf.Clamp(newThrottle, throttleRange.x, throttleRange.y);
-        Debug.Log("SetThrottle: " + throttle);
+        targetThrottle = Mathf.Clamp(newThrottle, throttleRange.x, throttleRange.y);
+        Debug.Log("SetThrottle: " + targetThrottle);
     }
     
     public float CalculatePower()

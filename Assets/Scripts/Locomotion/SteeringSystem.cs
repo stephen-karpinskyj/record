@@ -7,9 +7,23 @@ public class SteeringSystem : MonoBehaviour
     
     [SerializeField]
     Transform[] wheels;
-
-    float angle;
     
+    [SerializeField]
+    float lerpSpeed = 5f;
+    
+    float angle;
+    float targetAngle;
+
+    void FixedUpdate()
+    {
+        angle = Mathf.Lerp(angle, targetAngle, Time.fixedDeltaTime * lerpSpeed);
+        
+        foreach (var wheel in wheels)
+        {
+            wheel.localRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+    }
+
     public float GetAngle()
     {
         return angle;
@@ -17,13 +31,7 @@ public class SteeringSystem : MonoBehaviour
     
     public void SetAngle(float newAngle)
     {
-        // TODO: Lerp value
-        angle = Mathf.Clamp(newAngle, angleRange.x, angleRange.y);
-        Debug.Log("SetAngle: " + angle);
-        
-        foreach (var wheel in wheels)
-        {
-            wheel.localRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        }
+        targetAngle = Mathf.Clamp(newAngle, angleRange.x, angleRange.y);
+        Debug.Log("SetAngle: " + targetAngle);
     }
 }
