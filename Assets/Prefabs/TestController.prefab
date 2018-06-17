@@ -51,5 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cac8bdd8281b459ebe862ce9682db52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  steering: {fileID: 0}
-  engine: {fileID: 0}
+  mainThruster: {fileID: 0}
+  cwThruster: {fileID: 0}
+  ccwThruster: {fileID: 0}

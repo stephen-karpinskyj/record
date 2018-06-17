@@ -4,39 +4,42 @@ using UnityEngine;
 public class TestController : MonoBehaviour
 {
     [SerializeField]
-    Engine engine;
+    Thruster mainThruster;
     
     [SerializeField]
-    SteeringSystem steering;
+    Thruster cwThruster;
+    
+    [SerializeField]
+    Thruster ccwThruster;
     
 	void Start()
     {
-        StartCoroutine(ThrottleCoroutine());
-        StartCoroutine(SteeringCoroutine());
+        StartCoroutine(MainThrusterCoroutine());
+        StartCoroutine(AttitudeThrusterCoroutine(cwThruster));
+        StartCoroutine(AttitudeThrusterCoroutine(ccwThruster));
 	}
     
-    IEnumerator ThrottleCoroutine()
+    IEnumerator MainThrusterCoroutine()
     {
         while (true)
         {
-            var tR = Random.value;
-            var throttle = Random.Range(0.25f, 1f) * (tR < 0.333f ? 1f : -0.5f);
-            engine.SetThrottle(throttle);
+            var r = Random.value;
+            var throttle = r > 0.75f ? 0f : Random.Range(0f, 1f);
+            mainThruster.SetThrottle(throttle);
             
-            yield return new WaitForSeconds(Random.Range(2f, 3f));
+            yield return new WaitForSeconds(Random.Range(1f, 2f));
         }
     }
-    
-    IEnumerator SteeringCoroutine()
+
+    IEnumerator AttitudeThrusterCoroutine(Thruster thruster)
     {
         while (true)
         {
-            var dR = Random.value;
-            var direction = dR < 0.333f ? 0f : dR < 0.666f ? -1f : 1f;
-            var angle = Random.Range(5f, 15f) * direction;
-            steering.SetAngle(angle);
+            var r = Random.value;
+            var throttle = r > 0.1f ? 0f : Random.Range(0f, 1f);
+            thruster.SetThrottle(throttle);
 
-            yield return new WaitForSeconds(Random.Range(1f, 2f));
+            yield return new WaitForSeconds(Random.Range(0.05f, 0.15f));
         }
     }
 }
