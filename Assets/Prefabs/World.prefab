@@ -38,12 +38,12 @@ GameObject:
   - component: {fileID: 23081527708635548}
   - component: {fileID: 64858888461835936}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: Stars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1740348467925312
 GameObject:
   m_ObjectHideFlags: 0

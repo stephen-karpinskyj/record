@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class TestController : MonoBehaviour
+public class RandomShipController : MonoBehaviour
 {
     [SerializeField]
     Thruster mainThruster;
