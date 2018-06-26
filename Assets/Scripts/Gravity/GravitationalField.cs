@@ -2,7 +2,7 @@
 
 public class GravitationalField : MonoBehaviour
 {
-    const float G = 0.00000000006673f; // 6.673×10-11
+    public const float G = 0.00000000006673f; // 6.673×10-11
     
     [SerializeField]
     Rigidbody2D ship;
@@ -31,5 +31,15 @@ public class GravitationalField : MonoBehaviour
         var dir = diff.normalized;
         var force = dir * ((G * mass * ship.mass) / distSquared);
         ship.AddForce(force);
+    }
+
+    public float GetMass()
+    {
+        return mass;
+    }
+    
+    public Vector2 GetPosition()
+    {
+        return transform.position;
     }
 }
