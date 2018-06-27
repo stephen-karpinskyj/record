@@ -8,7 +8,7 @@ public class FPSUIWidget : MonoBehaviour
     Text text;
     
     [SerializeField]
-    float frequency = 0.5F; // The update frequency of the fps
+    float frequency = 0.5f; // The update frequency of the fps
 	
     [SerializeField]
     int numDecimal = 1; // How many decimal do you want to display
@@ -38,7 +38,7 @@ public class FPSUIWidget : MonoBehaviour
  
 	void Update()
 	{
-	    accum += Time.timeScale/Time.deltaTime;
+	    accum += Time.timeScale / Time.deltaTime;
         frames++;
 	}
  
@@ -46,7 +46,11 @@ public class FPSUIWidget : MonoBehaviour
 	{
 		while (true)
 		{
-			yield return new WaitForSeconds(frequency);
+            var start = Time.realtimeSinceStartup;
+            while (Time.realtimeSinceStartup < start + frequency)
+            {
+                yield return null;
+            }
             
 		    var fps = accum / frames;
 

@@ -5,8 +5,11 @@ using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
     [SerializeField]
-    Vector2 timeScaleRange = new Vector2(0.01f, 1000f);
+    float[] timeScaleSteps = { 0.25f, 0.5f, 1f, 2f, 5f, 15f, 30f, 60f };
 
+    [SerializeField]
+    int defaultTimeScaleStepIndex = 2;
+    
     [SerializeField]
     Text timeScaleText;
     
@@ -15,27 +18,35 @@ public class UI : MonoBehaviour
     
     [SerializeField]
     Camera worldCamera;
-    
-    void UpdateTimescale(float timeScale)
+
+    int timeScaleStepIndex;
+
+    void Awake()
     {
-        Time.timeScale = Mathf.Clamp(timeScale, timeScaleRange.x, timeScaleRange.y);
+        timeScaleStepIndex = defaultTimeScaleStepIndex;
+    }
+
+    void UpdateTimescale(int stepIndex)
+    {
+        timeScaleStepIndex = Mathf.Clamp(stepIndex, 0, timeScaleSteps.Length - 1);
+        Time.timeScale = timeScaleSteps[timeScaleStepIndex];
         timeScaleText.text = Time.timeScale.ToString();
     }
     
     public void UGUI_HandleResetButtonClick()
     {
-        UpdateTimescale(1f);
+        UpdateTimescale(defaultTimeScaleStepIndex);
         SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
     
     public void UGUI_HandleTimeScaleDecreaseButtonClick()
     {
-        UpdateTimescale(Time.timeScale / 10f);
+        UpdateTimescale(timeScaleStepIndex - 1);
     }
     
     public void UGUI_HandleTimeScaleIncreaseButtonClick()
     {
-        UpdateTimescale(Time.timeScale * 10f);
+        UpdateTimescale(timeScaleStepIndex + 1);
     }
     
     public void UGUI_HandleZoomSliderValueChange()

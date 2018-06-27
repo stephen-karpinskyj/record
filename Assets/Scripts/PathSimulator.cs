@@ -13,7 +13,10 @@ public class PathSimulator : MonoBehaviour
     GravitationalField otherBody;
 
     [SerializeField]
-    int numSteps = 100;
+    float timeInterval = 0.1f;
+
+    [SerializeField]
+    float duration = 1f;
     
     [SerializeField]
     LineRenderer line;
@@ -30,6 +33,7 @@ public class PathSimulator : MonoBehaviour
     
     void Awake()
     {
+        var numSteps = Mathf.CeilToInt(duration / timeInterval);
         points = new Vector3[numSteps];
     }
 
@@ -38,8 +42,8 @@ public class PathSimulator : MonoBehaviour
         Vector2 collisionPos;
         collisionView.localScale = Vector3.zero;
         
-        var pos = myBody.position;
-        var vel = myBody.velocity;
+        var pos = myBody.worldCenterOfMass;
+        var vel = myBody.GetPointVelocity(pos);
 
         points[0] = pos;
 
@@ -52,7 +56,9 @@ public class PathSimulator : MonoBehaviour
             var force = dir * ((G * otherBody.GetMass() * myBody.mass) / distSquared);
 
             var tempPos = pos;
-            pos += (vel + force);
+            var acc = force / myBody.mass;
+            vel += acc * timeInterval;
+            pos += vel * timeInterval;
             
             if (CheckCollision(tempPos, pos, out collisionPos))
             {
@@ -62,7 +68,6 @@ public class PathSimulator : MonoBehaviour
                 break;
             }
             
-            vel = pos - tempPos;
             points[i++] = pos;
         }
 
