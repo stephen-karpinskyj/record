@@ -66,10 +66,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224000014030348348}
+  - component: {fileID: 114077716520756702}
   - component: {fileID: 223000011776128654}
   - component: {fileID: 114000012031664504}
   - component: {fileID: 114000010967074262}
-  - component: {fileID: 114077716520756702}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 224481925241774246}
   - component: {fileID: 114466315626087124}
   m_Layer: 5
-  m_Name: ZoomSlider
+  m_Name: CameraZoomSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -587,10 +587,45 @@ MonoBehaviour:
   - 15
   - 30
   - 60
+  - 100
   defaultTimeScaleStepIndex: 2
   timeScaleText: {fileID: 114000013583987798}
-  zoomSlider: {fileID: 114466315626087124}
-  worldCamera: {fileID: 0}
+  defaultCameraZoomPercentage: 0.15
+  zoomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.49897915
+      value: 0.07521428
+      inSlope: 0.46644545
+      outSlope: 0.46644545
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 3.8823547
+      outSlope: 3.8823547
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.141378
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  cameraZoomRange: {x: 5, y: 10000}
+  cameraZoomSlider: {fileID: 114466315626087124}
 --- !u!114 &114134745676318594
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -788,10 +823,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 224516057168525050}
   m_HandleRect: {fileID: 224999104779342466}
   m_Direction: 0
-  m_MinValue: 5
-  m_MaxValue: 100
+  m_MinValue: 0
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 5
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:

@@ -2,15 +2,22 @@
 
 public class PathSimulator : MonoBehaviour
 {
-    const float G = GravitationalField.G;
-    
-    [Header("Line")]
+    class SimulatedEntity
+    {
+        public PhysicsEntity Entity;
+        public Vector2 Force;
+        public Vector2 Velocity;
+        public Vector2 Position;
+    }
     
     [SerializeField]
-    Rigidbody2D myBody;
+    string entityId;
 
     [SerializeField]
-    GravitationalField otherBody;
+    string[] otherEntityIds;
+
+    [SerializeField]
+    string simulationLayer = "Simulation";
 
     [SerializeField]
     float timeInterval = 0.1f;
@@ -21,76 +28,146 @@ public class PathSimulator : MonoBehaviour
     [SerializeField]
     LineRenderer line;
 
-    [Header("Collision")]
-    
     [SerializeField]
-    CircleCollider2D otherCollider;
+    Transform collisionViewPrefab;
 
-    [SerializeField]
-    Transform collisionView;
-
+    SimulatedEntity entity;
+    SimulatedEntity[] entities;
     Vector3[] points;
+    Vector2 previousEntityPosition;
+    Vector2 collisionPosition;
+    Transform collisionView;
     
     void Awake()
     {
         var numSteps = Mathf.CeilToInt(duration / timeInterval);
         points = new Vector3[numSteps];
+        
+        collisionView = GameObjectUtility.InstantiatePrefab(collisionViewPrefab);
+    }
+
+    void Start()
+    {
+        entities = new SimulatedEntity[otherEntityIds.Length + 1];
+        
+        var i = 0;
+        for (i = 0; i < otherEntityIds.Length; i++) 
+        {
+            entities[i] = new SimulatedEntity{ Entity = PhysicsManager.Instance.GetEntity(otherEntityIds[i]) };
+        }
+        
+        entity = new SimulatedEntity { Entity = PhysicsManager.Instance.GetEntity(entityId) };
+        entities[i] = entity;
     }
 
     void Update()
     {
-        Vector2 collisionPos;
-        collisionView.localScale = Vector3.zero;
+        ResetEntities();
+        UpdateLinePoint(0);
         
-        var pos = myBody.worldCenterOfMass;
-        var vel = myBody.GetPointVelocity(pos);
-
-        points[0] = pos;
-
-        var i = 1;
-        while (i < points.Length)
+        var i = 0;
+        for (i = 1; i < points.Length; i++)
         {
-            var diff = otherBody.GetPosition() - pos;
-            var distSquared = diff.sqrMagnitude;
-            var dir = diff.normalized;
-            var force = dir * ((G * otherBody.GetMass() * myBody.mass) / distSquared);
+            previousEntityPosition = entity.Position;
 
-            var tempPos = pos;
-            var acc = force / myBody.mass;
-            vel += acc * timeInterval;
-            pos += vel * timeInterval;
+            ResetForces();
+            CalculateForces();
+            ApplyForces();
             
-            if (CheckCollision(tempPos, pos, out collisionPos))
+            if (CheckCollision())
             {
-                points[i++] = collisionPos;
-                collisionView.position = collisionPos;
-                collisionView.localScale = Vector3.one;
+                HandleCollision(ref i);
                 break;
             }
             
-            points[i++] = pos;
+            UpdateLinePoint(i);
         }
-
-        line.positionCount = i;
-        line.SetPositions(points);
+        
+        UpdateLine(i);
     }
-
-    bool CheckCollision(Vector2 a, Vector2 b, out Vector2 collisionPos)
+    
+    void ResetEntities()
     {
-        var diff = b - a;
+        collisionView.localScale = Vector3.zero;
+        
+        foreach (var e in entities)
+        {
+            e.Velocity = e.Entity.GetVelocity();
+            e.Position = e.Entity.GetPosition();
+            //var coll = e.Entity.GetSimulationCollider();
+            //if (coll)
+            //{
+            //    coll.transform.position = e.Position;
+            //}
+        }
+    }
+    
+    void ResetForces()
+    {
+        foreach (var e in entities)
+        {
+            e.Force = Vector2.zero;
+        }
+    }
+    
+    void CalculateForces()
+    {
+        foreach (var a in entities)
+        {
+            foreach (var b in entities)
+            {
+                if (a != b)
+                {
+                    a.Force += PhysicsManager.CalculateGravitationalForce(a.Position, a.Entity.GetMass(), b.Position, b.Entity.GetMass());
+                }
+            }
+        }
+    }
+    
+    void ApplyForces()
+    {
+        foreach (var e in entities)
+        {
+            var acceleration = e.Force / e.Entity.GetMass();
+            e.Velocity += acceleration * timeInterval;
+            e.Position += e.Velocity * timeInterval;
+        }
+    }
+    
+    bool CheckCollision()
+    {
+        var diff = entity.Position - previousEntityPosition;
         var dist = diff.magnitude;
         var dir = diff.normalized;
-        
-        var layerMask = LayerMask.GetMask(LayerMask.LayerToName(otherCollider.gameObject.layer));
-        var hit = Physics2D.Raycast(a, dir, dist, layerMask);
-        
-        if (hit.collider == otherCollider)
+
+        var layerMask = LayerMask.GetMask(simulationLayer);
+        // TODO: This should check for collision at simulated position
+        var hit = Physics2D.Raycast(previousEntityPosition, dir, dist, layerMask);
+
+        if (hit.collider != entity.Entity.GetSimulationCollider())
         {
-            collisionPos = hit.point;
+            collisionPosition = hit.point;
             return true;
         }
-        
-        collisionPos = Vector2.zero;
+
         return false;
+    }
+    
+    void HandleCollision(ref int step)
+    {
+        points[step++] = collisionPosition;
+        collisionView.position = collisionPosition;
+        collisionView.localScale = Vector3.one;
+    }
+    
+    void UpdateLinePoint(int step)
+    {
+        points[step] = entity.Position;
+    }
+    
+    void UpdateLine(int pointCount)
+    {
+        line.positionCount = pointCount;
+        line.SetPositions(points);
     }
 }
