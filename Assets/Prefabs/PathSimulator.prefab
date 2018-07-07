@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4508950569246204}
   - component: {fileID: 114166456030555254}
+  - component: {fileID: 114863467581590998}
   - component: {fileID: 120470457272712264}
   m_Layer: 0
   m_Name: PathSimulator
@@ -62,6 +63,17 @@ MonoBehaviour:
   line: {fileID: 120470457272712264}
   collisionViewPrefab: {fileID: 4380743539532898, guid: 83db26daeb77948ea86652a1cc5d7004,
     type: 2}
+--- !u!114 &114863467581590998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1297242865016278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e25305dafee14c3fafb6b657491de67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!120 &120470457272712264
 LineRenderer:
   m_ObjectHideFlags: 1

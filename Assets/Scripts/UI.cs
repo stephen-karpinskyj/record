@@ -49,8 +49,8 @@ public class UI : MonoBehaviour
     
     void UpdateCameraZoom(float zoomPercentage)
     {
-        var zoomLevel = cameraZoomRange.x + (zoomCurve.Evaluate(zoomPercentage) * cameraZoomRangeDiff);
-        Camera.main.orthographicSize = zoomLevel;
+        var zoom = cameraZoomRange.x + (zoomCurve.Evaluate(zoomPercentage) * cameraZoomRangeDiff);
+        WorldCamera.Instance.SetZoom(zoom);
     }
     
     public void UGUI_HandleResetButtonClick()
