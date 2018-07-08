@@ -1,21 +1,13 @@
 ﻿using UnityEngine;
 
-public class LineScaler : MonoBehaviour
+public class ObjectScaler : MonoBehaviour
 {
-    const float BaseSize = 0.01f;
-    
     [SerializeField]
     float size = 1f;
 
     LineRenderer line;
     TrailRenderer trail;
     
-    void Awake()
-    {
-        line = GetComponent<LineRenderer>();
-        trail = GetComponent<TrailRenderer>();
-    }
-
     void OnEnable()
     {
         UpdateLineWidth(WorldCamera.Instance.GetZoom());
@@ -32,17 +24,7 @@ public class LineScaler : MonoBehaviour
 
     void UpdateLineWidth(float cameraZoom)
     {
-        var width = cameraZoom * size * BaseSize;
-
-        if (line)
-        {
-            line.widthMultiplier = width;
-        }
-        
-        if (trail)
-        {
-            trail.widthMultiplier = width;
-        }
+        transform.localScale = Vector3.one * cameraZoom * size;
     }
     
     void HandleCameraZoom(float zoom)

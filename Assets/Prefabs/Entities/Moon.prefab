@@ -305,8 +305,8 @@ TrailRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1428114515
+  m_SortingLayer: -1
   m_SortingOrder: -1
   m_Time: 500
   m_Parameters:
@@ -370,7 +370,7 @@ TrailRenderer:
     alignment: 0
     textureMode: 0
     generateLightingData: 0
-  m_MinVertexDistance: 0.5
+  m_MinVertexDistance: 2
   m_Autodestruct: 0
 --- !u!114 &114126182713300530
 MonoBehaviour:
@@ -427,6 +427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e25305dafee14c3fafb6b657491de67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  size: 1
 --- !u!212 &212969963187477102
 SpriteRenderer:
   m_ObjectHideFlags: 1

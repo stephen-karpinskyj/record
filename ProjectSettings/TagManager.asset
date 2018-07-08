@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Helpers
+    uniqueID: 1428114515
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
