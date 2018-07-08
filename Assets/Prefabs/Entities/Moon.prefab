@@ -133,7 +133,7 @@ Transform:
   m_GameObject: {fileID: 1537754941304056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 25, y: 25, z: 25}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children:
   - {fileID: 4394156688107850}
   m_Father: {fileID: 4461044433000718}
@@ -271,7 +271,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 12.5
+  m_Radius: 10
 --- !u!96 &96679328104965752
 TrailRenderer:
   serializedVersion: 2
@@ -414,7 +414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityId: Moon
   otherEntityId: Ship
-  color: {r: 0.8160377, g: 1, b: 0.9854698, a: 0.3764706}
+  color: {r: 1, g: 1, b: 1, a: 0.3764706}
   prefab: {fileID: 114098924900427888, guid: 7681d76619a604b4bb25a9bd55d58102, type: 2}
 --- !u!114 &114876752396320208
 MonoBehaviour:
@@ -460,11 +460,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 72207753
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fe78596a27ca043c7a1bedb25e64db6c, type: 3}
-  m_Color: {r: 0.9607843, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

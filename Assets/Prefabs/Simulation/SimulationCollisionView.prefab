@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4380743539532898}
   m_Layer: 0
-  m_Name: CollisionView
+  m_Name: SimulationCollisionView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

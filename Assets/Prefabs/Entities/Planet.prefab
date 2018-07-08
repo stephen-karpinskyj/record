@@ -116,7 +116,7 @@ Transform:
   m_GameObject: {fileID: 1185724670453638}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 80, y: 80, z: 80}
   m_Children:
   - {fileID: 4858372277142148}
   m_Father: {fileID: 4992425230806946}
@@ -225,7 +225,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 50
+  m_Radius: 40
 --- !u!58 &58998922372858752
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -265,7 +265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityId: Planet
   otherEntityId: Ship
-  color: {r: 0.9767469, g: 1, b: 0.8156863, a: 0.3764706}
+  color: {r: 0.75, g: 1, b: 0.97733194, a: 0.3764706}
   prefab: {fileID: 114098924900427888, guid: 7681d76619a604b4bb25a9bd55d58102, type: 2}
 --- !u!114 &114702886674348610
 MonoBehaviour:
@@ -317,11 +317,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 72207753
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fe78596a27ca043c7a1bedb25e64db6c, type: 3}
-  m_Color: {r: 0.99771607, g: 1, b: 0.9481132, a: 1}
+  m_Color: {r: 0.9103774, g: 1, b: 0.997567, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

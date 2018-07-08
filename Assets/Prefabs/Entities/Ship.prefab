@@ -819,8 +819,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1466433330195292}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10018.4, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -10011.15, y: 0, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 4763778159922950}
@@ -831,7 +831,7 @@ Transform:
   - {fileID: 4856106797055578}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!4 &4920810917467374
 Transform:
   m_ObjectHideFlags: 1
@@ -1053,7 +1053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef63b000e8dd94a74b61413ed1eff0dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionDampeningFactor: 0.25
+  collisionDampeningRange: {x: 0.1, y: 0.6}
 --- !u!114 &114084460017510936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1480,7 +1480,7 @@ LineRenderer:
   m_SortingLayer: -1
   m_SortingOrder: 1
   m_Positions:
-  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: -0.05, z: 0}
   - {x: 0, y: 0.2, z: 0}
   m_Parameters:
     serializedVersion: 2

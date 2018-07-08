@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Astronomicals
+    uniqueID: 72207753
+    locked: 0
   - name: Helpers
     uniqueID: 1428114515
     locked: 0

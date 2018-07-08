@@ -1,15 +1,7 @@
 ﻿using UnityEngine;
 
-public class PathSimulator : MonoBehaviour
+public class Simulation : MonoBehaviour
 {
-    class SimulatedEntity
-    {
-        public PhysicsEntity Entity;
-        public Vector2 Force;
-        public Vector2 Velocity;
-        public Vector2 Position;
-    }
-    
     [SerializeField]
     string entityId;
 
@@ -24,6 +16,9 @@ public class PathSimulator : MonoBehaviour
 
     [SerializeField]
     float duration = 1f;
+
+    [SerializeField]
+    float entityRadius = 3.5f;
     
     [SerializeField]
     LineRenderer line;
@@ -31,8 +26,8 @@ public class PathSimulator : MonoBehaviour
     [SerializeField]
     Transform collisionViewPrefab;
 
-    SimulatedEntity entity;
-    SimulatedEntity[] entities;
+    SimulationEntity entity;
+    SimulationEntity[] entities;
     Vector3[] points;
     Vector2 previousEntityPosition;
     Vector2 collisionPosition;
@@ -48,15 +43,15 @@ public class PathSimulator : MonoBehaviour
 
     void Start()
     {
-        entities = new SimulatedEntity[otherEntityIds.Length + 1];
+        entities = new SimulationEntity[otherEntityIds.Length + 1];
         
         var i = 0;
         for (i = 0; i < otherEntityIds.Length; i++) 
         {
-            entities[i] = new SimulatedEntity{ Entity = PhysicsManager.Instance.GetEntity(otherEntityIds[i]) };
+            entities[i] = new SimulationEntity{ Entity = PhysicsManager.Instance.GetEntity(otherEntityIds[i]) };
         }
         
-        entity = new SimulatedEntity { Entity = PhysicsManager.Instance.GetEntity(entityId) };
+        entity = new SimulationEntity { Entity = PhysicsManager.Instance.GetEntity(entityId) };
         entities[i] = entity;
     }
 
@@ -94,11 +89,6 @@ public class PathSimulator : MonoBehaviour
         {
             e.Velocity = e.Entity.GetVelocity();
             e.Position = e.Entity.GetPosition();
-            //var coll = e.Entity.GetSimulationCollider();
-            //if (coll)
-            //{
-            //    coll.transform.position = e.Position;
-            //}
         }
     }
     
@@ -141,12 +131,11 @@ public class PathSimulator : MonoBehaviour
         var dir = diff.normalized;
 
         var layerMask = LayerMask.GetMask(simulationLayer);
-        // TODO: This should check for collision at simulated position
-        var hit = Physics2D.Raycast(previousEntityPosition, dir, dist, layerMask);
+        var hit = Physics2D.CircleCast(previousEntityPosition, entityRadius, dir, dist, layerMask);
 
         if (hit.collider != entity.Entity.GetSimulationCollider())
         {
-            collisionPosition = hit.point;
+            collisionPosition = hit.centroid;
             return true;
         }
 

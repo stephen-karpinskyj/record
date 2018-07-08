@@ -3,7 +3,7 @@
 public class ShipCollisionHandler : MonoBehaviour
 {
     [SerializeField]
-    float collisionDampeningFactor = 0.7f;
+    Vector2 collisionDampeningRange = new Vector2(0.05f, 0.2f);
     
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -13,7 +13,8 @@ public class ShipCollisionHandler : MonoBehaviour
         var vel = entity.GetVelocity();
         var dir = vel.normalized;
         var reflectedDir = Vector2.Reflect(dir, normal);
-        entity.SetVelocity(reflectedDir * vel.magnitude * collisionDampeningFactor);
+        var dampeningFactor = CalculateDampeningFactor(dir, reflectedDir);
+        entity.SetVelocity(reflectedDir * vel.magnitude * dampeningFactor);
         rb.isKinematic = false;
     }
     
@@ -21,5 +22,11 @@ public class ShipCollisionHandler : MonoBehaviour
     {
         var rb = collision.otherRigidbody;
         rb.isKinematic = true;
+    }
+    
+    float CalculateDampeningFactor(Vector2 inDir, Vector2 outDir)
+    {
+        var t = (Vector2.Dot(inDir, outDir) + 1) / 2; // [0=parallel, 1=perpendicular]
+        return (collisionDampeningRange.y - collisionDampeningRange.x) * t + collisionDampeningRange.x;
     }
 }
