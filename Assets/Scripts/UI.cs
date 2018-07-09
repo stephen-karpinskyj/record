@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DigitalRubyShared;
 
 public class UI : MonoBehaviour
 {
@@ -27,17 +28,38 @@ public class UI : MonoBehaviour
     Vector2 cameraZoomRange = new Vector2(5f, 10000f);
     
     [SerializeField]
+    float zoomScrollWheelSpeed = 1f;
+
+    [SerializeField]
+    float pinchZoomSpeed = 1f;
+    
+    [SerializeField]
     Slider cameraZoomSlider;
 
     int timeScaleStepIndex;
     float cameraZoomRangeDiff;
+    ScaleGestureRecognizer scaleGesture;
 
     void Awake()
     {
         timeScaleStepIndex = defaultTimeScaleStepIndex;
         cameraZoomRangeDiff = cameraZoomRange.y - cameraZoomRange.x;
         
-        cameraZoomSlider.value = defaultCameraZoomPercentage;
+        UpdateZoomSlider(defaultCameraZoomPercentage);
+    }
+
+    void Start()
+    {
+        CreateScaleGesture();
+    }
+
+    void Update()
+    {
+        var scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (!Mathf.Approximately(scroll, 0f))
+        {
+            UpdateZoomSlider(cameraZoomSlider.value + (scroll * zoomScrollWheelSpeed * Time.deltaTime));
+        }
     }
 
     void UpdateTimeScale(int stepIndex)
@@ -47,10 +69,31 @@ public class UI : MonoBehaviour
         timeScaleText.text = Time.timeScale.ToString();
     }
     
+    void UpdateZoomSlider(float value)
+    {
+        cameraZoomSlider.value = value;
+    }
+    
     void UpdateCameraZoom(float zoomPercentage)
     {
         var zoom = cameraZoomRange.x + (zoomCurve.Evaluate(zoomPercentage) * cameraZoomRangeDiff);
         WorldCamera.Instance.SetZoom(zoom);
+    }
+    
+    void ScaleGestureCallback(GestureRecognizer gesture)
+    {
+        if (gesture.State == GestureRecognizerState.Executing)
+        {
+            UpdateZoomSlider(cameraZoomSlider.value * scaleGesture.ScaleMultiplier);
+        }
+    }
+
+    void CreateScaleGesture()
+    {
+        scaleGesture = new ScaleGestureRecognizer();
+        scaleGesture.StateUpdated += ScaleGestureCallback;
+        scaleGesture.ZoomSpeed = pinchZoomSpeed;
+        FingersScript.Instance.AddGesture(scaleGesture);
     }
     
     public void UGUI_HandleResetButtonClick()
