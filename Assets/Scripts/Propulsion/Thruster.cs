@@ -39,8 +39,11 @@ public class Thruster : MonoBehaviour
         entity.AddForce(-transform.up * force * throttle);
         entity.AddTorque(torque * throttle);
 
-        var main = ps.main;
-        main.startSize = Mathf.Lerp(particleSizeRange.x, particleSizeRange.y, throttle);
+        if (ps)
+        {
+            var main = ps.main;
+            main.startSize = Mathf.Lerp(particleSizeRange.x, particleSizeRange.y, throttle);
+        }
     }
     
     public void SetThrottle(float newThrottle)
