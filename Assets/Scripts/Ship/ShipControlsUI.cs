@@ -51,8 +51,8 @@ public class ShipControlsUI : MonoBehaviour
         showingPosition = controlsParent.anchoredPosition;
         hidingPosition = -controlsParent.sizeDelta;
         
-        showing = false;
-        SetPosition(hidingPosition);
+        showing = true;
+        SetPosition(showingPosition);
     }
 
     void SetMainThrusterDirection(bool fwd)
